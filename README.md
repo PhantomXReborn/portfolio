@@ -43,13 +43,6 @@ Welcome to my portfolio! A digital storage system where projects are set free, a
 
 </div>
 
-### 🎯 **Keyboard Wizardry**
-- Press `t` to toggle between dimensions (dark/light)
-- Scroll to witness statistical alchemy
-- Hover to reveal hidden code overlays
-
----
-
 ## 🛸 **Tech**
 
 <div align="center">
