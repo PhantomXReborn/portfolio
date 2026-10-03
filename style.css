@@ -1,0 +1,1120 @@
+/* ============================================================
+   STYLE.CSS — Galaxy Portfolio with Minecraft End Theme
+   ============================================================
+
+   HOW TO USE THIS FILE:
+   ---------------------
+   This file is organized into sections. Each section starts with a
+   big TODO comment block explaining what it does and how to modify it.
+   Read through each one, make small changes, and refresh your browser
+   to see the effect. That's the best way to learn CSS!
+
+   LEARNING ORDER (if you're new):
+   1. Read the :root section (variables)
+   2. Read the reset (* selector)
+   3. Read the body / galaxy-bg sections
+   4. Then tackle one component at a time (hero, menu, cards, etc.)
+   ============================================================ */
+
+
+/* ============================================================
+   TODO #1: CSS RESET
+   ============================================================
+   Browsers apply their own default styles (margins, padding, etc.).
+   A "reset" wipes those defaults so your design is consistent.
+
+   WHAT IT DOES:
+   - Removes all default margins and padding
+   - Makes width/height calculations predictable (border-box)
+   
+   TRY THIS: Change `box-sizing` to `content-box` and see what
+   happens to element sizes. Then change it back.
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   TODO #2: CSS CUSTOM PROPERTIES (Variables)
+   ============================================================
+   Variables start with `--` and are declared inside a selector.
+   We put them in `:root` so they're available EVERYWHERE.
+
+   WHY USE VARIABLES?
+   - Change one value → updates everywhere it's used
+   - Makes themes easy (try changing --end-purple to a red!)
+
+   TRY THIS: Change --end-purple to `#ff0000` and refresh.
+   Notice how EVERYTHING purple in the design turns red.
+   ============================================================ */
+:root {
+  /* ---- Minecraft End palette ---- */
+  --end-bg: #0b0e14;           /* main page background */
+  --end-void: #05070a;         /* deepest black layer */
+  --end-purple: #6a4c9c;       /* End portal purple */
+  --end-cyan: #4a9e9e;         /* accent teal from End sky */
+  --end-stone: #2a2e3a;        /* End stone gray */
+  --end-stone-light: #3a3f4d;  /* lighter stone */
+  --end-glow: #b7a5e0;         /* soft lavender glow */
+  --end-gold: #c9a84c;         /* End city gold accent */
+  --end-teal: #2d7a7a;         /* darker teal */
+  --end-dark: #0f1118;         /* dark panels */
+
+  /* ---- Galaxy accents ---- */
+  --galaxy-1: #5865f2;         /* blue */
+  --galaxy-2: #9b59b6;         /* violet */
+  --galaxy-3: #3498db;         /* sky blue */
+  --galaxy-4: #1abc9c;         /* turquoise */
+
+  /* ---- Text colors ---- */
+  --text: #e8e6f0;             /* main text */
+  --text-muted: #9a94b0;       /* secondary text */
+
+  /* ---- Fonts ---- */
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+  --font-pixel: 'Press Start 2P', 'Courier New', monospace;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+
+  /* ---- Layout values ---- */
+  --radius: 12px;              /* rounded corner size */
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.7);  /* drop shadow */
+
+  /* ---- Responsive sizing (experimental) ---- */
+  --content-max-width: 1300px;
+}
+
+
+/* ============================================================
+   TODO #3: BODY — the base of the page
+   ============================================================
+   The <body> wraps everything. We set:
+   - background color
+   - text color and font
+   - minimum height so the background fills the screen
+   - overflow-x: hidden to prevent horizontal scrollbars
+     from the decorative particles that float off-screen
+
+   TRY THIS: Change `line-height` from 1.6 to 2.0 and see how
+   the spacing between lines of text changes.
+   ============================================================ */
+body {
+  background-color: var(--end-void);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;           /* 100% of viewport height */
+  overflow-x: hidden;          /* hide horizontal scroll */
+  position: relative;          /* so child elements can be positioned */
+}
+
+
+/* ============================================================
+   TODO #4: GALAXY BACKGROUND (Nebula)
+   ============================================================
+   `.galaxy-bg` sits BEHIND everything (z-index: -2).
+   We use multiple `radial-gradient()` layers to create nebula-like
+   blobs of color that overlap to form a galaxy sky.
+
+   KEY CONCEPT — z-index:
+   - Negative values put elements BEHIND normal content
+   - Higher positive values put elements IN FRONT
+   - Think of it like stacking papers on a desk.
+
+   TRY THIS: Change the `20% 30%` positions to different numbers.
+   The first number is horizontal (0% = left), second is vertical
+   (0% = top). Move the nebula blobs around!
+   ============================================================ */
+.galaxy-bg {
+  position: fixed;             /* stays in place while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;                 /* behind everything */
+  background:
+    radial-gradient(ellipse at 20% 30%, #1a1035 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, #0a1a2e 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #0d0b1a 0%, var(--end-void) 80%);
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   TODO #5: STAR LAYERS (three layers of twinkling stars)
+   ============================================================
+   Each layer uses `radial-gradient` dots repeated with
+   `background-repeat: repeat` to create a starfield.
+
+   KEY CONCEPT — background-size:
+   The size of one "tile" of the repeated pattern.
+   Smaller = more dense stars. Larger = sparser.
+
+   KEY CONCEPT — animation:
+   The `@keyframes twinkle` animation below makes stars fade
+   in and out. Each layer uses a different duration and direction.
+
+   TRY THIS: Change the `4s` in `.stars` animation to `1s`.
+   The stars will twinkle very quickly!
+   ============================================================ */
+.stars, .stars2, .stars3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;                 /* behind content, in front of nebula */
+  pointer-events: none;        /* clicks pass through to elements below */
+}
+
+/* Layer 1: white stars, medium density */
+.stars {
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+    radial-gradient(2px 2px at 25% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 40% 10%, #fff, transparent),
+    radial-gradient(2px 2px at 60% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 75% 30%, #fff, transparent),
+    radial-gradient(3px 3px at 85% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 15% 70%, #fff, transparent),
+    radial-gradient(2px 2px at 50% 50%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 15%, #fff, transparent),
+    radial-gradient(2px 2px at 5% 90%, #fff, transparent),
+    radial-gradient(1px 1px at 35% 85%, #fff, transparent),
+    radial-gradient(2px 2px at 70% 5%, #fff, transparent);
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  animation: twinkle 4s infinite alternate;
+  opacity: 0.8;
+}
+
+/* Layer 2: colored stars (purple, teal, white) */
+.stars2 {
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, var(--end-glow), transparent),
+    radial-gradient(1px 1px at 70% 60%, var(--end-purple), transparent),
+    radial-gradient(2px 2px at 45% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 20%, var(--end-cyan), transparent),
+    radial-gradient(1px 1px at 10% 60%, #fff, transparent),
+    radial-gradient(2px 2px at 55% 10%, var(--galaxy-2), transparent),
+    radial-gradient(1px 1px at 95% 75%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 50%, var(--galaxy-3), transparent);
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  animation: twinkle 6s infinite alternate-reverse;
+  opacity: 0.6;
+}
+
+/* Layer 3: sparse bright stars */
+.stars3 {
+  background-image:
+    radial-gradient(1px 1px at 15% 40%, var(--end-glow), transparent),
+    radial-gradient(1px 1px at 65% 25%, #fff, transparent),
+    radial-gradient(1px 1px at 40% 75%, var(--end-purple), transparent),
+    radial-gradient(2px 2px at 80% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 5% 15%, var(--end-cyan), transparent),
+    radial-gradient(1px 1px at 50% 95%, #fff, transparent);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+  animation: twinkle 8s infinite alternate;
+  opacity: 0.4;
+}
+
+/* ------------------------------------------------------------
+   The twinkle animation — fades stars between 40% and 90% opacity.
+   
+   SYNTAX: `@keyframes name { 0% {...} 100% {...} }`
+   You can also use 25%, 50%, 75% to create multi-step animations.
+------------------------------------------------------------ */
+@keyframes twinkle {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
+
+/* ============================================================
+   TODO #6: FLOATING PARTICLES (Minecraft End style)
+   ============================================================
+   Each `.particle` is a tiny glowing dot that floats upward.
+   The animation moves it from the bottom of the screen (100vh)
+   to above the top (-10vh) while scaling up and fading.
+
+   KEY CONCEPT — transform: translateY()
+   Moves an element up or down WITHOUT affecting page layout.
+   Positive = down, negative = up.
+
+   TRY THIS: Change the `background` color to `#ff00ff` (magenta)
+   and add `box-shadow` with the same color. Very cyberpunk!
+   ============================================================ */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--end-purple);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--end-glow), 0 0 12px var(--end-purple);
+  animation: floatParticle 20s infinite linear;
+  opacity: 0;
+  bottom: -10px;               /* start below the viewport */
+}
+
+/* Each particle gets a different position and timing */
+.particle:nth-child(1) { left: 5%;  animation-delay: 0s; animation-duration: 18s; }
+.particle:nth-child(2) { left: 15%; animation-delay: 2s; animation-duration: 22s; }
+.particle:nth-child(3) { left: 25%; animation-delay: 4s; animation-duration: 16s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 25s; }
+.particle:nth-child(5) { left: 55%; animation-delay: 6s; animation-duration: 20s; }
+.particle:nth-child(6) { left: 70%; animation-delay: 3s; animation-duration: 24s; }
+.particle:nth-child(7) { left: 85%; animation-delay: 5s; animation-duration: 19s; }
+.particle:nth-child(8) { left: 95%; animation-delay: 7s; animation-duration: 21s; }
+.particle:nth-child(9) { left: 35%; animation-delay: 8s; animation-duration: 17s; }
+.particle:nth-child(10){ left: 60%; animation-delay: 9s; animation-duration: 23s; }
+
+/* ------------------------------------------------------------
+   The particle animation — flies up from bottom to top.
+   - At 0%:   starts at the bottom, tiny, invisible
+   - At 10%:  appears
+   - At 90%:  still visible
+   - At 100%: at the top, slightly bigger, invisible again
+------------------------------------------------------------ */
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translateY(-10vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+/* ============================================================
+   TODO #7: MAIN PORTFOLIO CONTAINER
+   ============================================================
+   This wrapper centers everything and limits the max width.
+   
+   KEY CONCEPT — margin: auto
+   When an element has a fixed max-width, `margin: 0 auto` centers
+   it horizontally within its parent.
+
+   KEY CONCEPT — position: relative + z-index
+   We set this so the portfolio content sits ABOVE the fixed
+   background layers (which have z-index: -1 and -2).
+
+   TRY THIS: Change max-width from 1300px to 900px. The whole
+   layout becomes narrower and more compact.
+   ============================================================ */
+.portfolio {
+  max-width: var(--content-max-width);
+  margin: 2rem auto;           /* 2rem top/bottom, auto left/right = centered */
+  padding: 0 1.5rem;           /* side padding so content doesn't touch edges */
+  position: relative;
+  z-index: 1;                  /* above the background layers */
+}
+
+
+/* ============================================================
+   TODO #8: MENU (End Portal style)
+   ============================================================
+   The menu is a horizontal bar with:
+   - A glowing border (End portal vibe)
+   - A rotating conic-gradient background effect via ::before
+   - Flex layout for logo | links | hamburger
+
+   KEY CONCEPT — ::before pseudo-element
+   A fake element inserted BEFORE the menu's real content.
+   Great for decorative layers like our rotating portal effect.
+
+   KEY CONCEPT — backdrop-filter: blur()
+   Blurs whatever is BEHIND this element. Creates a "frosted glass"
+   look. Try removing it and see the difference!
+
+   TRY THIS: Change `border-radius` to 0px → sharp rectangular menu.
+   Change it to 50px → super rounded pill menu.
+   ============================================================ */
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   /* logo left, links right */
+  padding: 1rem 2rem;
+  background: rgba(10, 12, 20, 0.85);
+  backdrop-filter: blur(12px);      /* frosted glass effect */
+  border: 1px solid rgba(106, 76, 156, 0.3);
+  border-radius: var(--radius);
+  box-shadow:
+    0 0 20px rgba(106, 76, 156, 0.15),   /* outer purple glow */
+    inset 0 0 30px rgba(106, 76, 156, 0.05);  /* inner subtle glow */
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;                 /* clips the rotating ::before */
+}
+
+/* The rotating "End portal" gradient behind the menu content */
+.menu::before {
+  content: '';                       /* required for pseudo-elements */
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    var(--end-purple),
+    transparent,
+    var(--end-cyan),
+    transparent
+  );
+  animation: rotatePortal 8s linear infinite;
+  opacity: 0.1;
+  z-index: -1;                       /* behind menu content */
+}
+
+@keyframes rotatePortal {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Logo --- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  color: var(--end-glow);
+  text-shadow: 0 0 10px var(--end-purple);
+  letter-spacing: 1px;
+}
+
+.logo i {
+  font-size: 1.4rem;
+  color: var(--end-cyan);
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  0%   { text-shadow: 0 0 5px var(--end-cyan); }
+  100% { text-shadow: 0 0 20px var(--end-cyan), 0 0 30px var(--end-purple); }
+}
+
+/* --- Navigation links --- */
+.nav-links {
+  display: flex;
+  gap: 1.8rem;
+  list-style: none;                  /* removes bullet points */
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;             /* removes underline */
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: 0.3s;
+  position: relative;                /* for the ::after underline */
+  padding: 0.3rem 0;
+}
+
+/* Animated underline on hover — starts at width 0 */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--end-purple), var(--end-cyan));
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--end-glow);
+}
+
+.nav-links a:hover::after {
+  width: 100%;                       /* expands to full width on hover */
+}
+
+/* --- Hamburger button (hidden on desktop) --- */
+.menu-toggle {
+  display: none;                     /* will be shown on mobile */
+  background: none;
+  border: 1px solid var(--end-purple);
+  color: var(--end-glow);
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu-toggle:hover {
+  background: var(--end-purple);
+  color: white;
+}
+
+
+/* ============================================================
+   TODO #9: HERO SECTION
+   ============================================================
+   The top "profile" area with avatar + name + subtitle.
+   
+   KEY CONCEPT — flexbox
+   `display: flex` puts children in a row by default.
+   `align-items: center` centers them vertically.
+   `gap: 2.5rem` adds space between them.
+
+   TRY THIS: Change `gap: 2.5rem` to `gap: 0.5rem`. The avatar and
+   text squeeze together. Now try `flex-direction: column` to stack them.
+   ============================================================ */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2.5rem;
+  background: rgba(12, 14, 24, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(106, 76, 156, 0.2);
+  border-radius: var(--radius);
+  box-shadow: 0 0 30px rgba(106, 76, 156, 0.1);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* A soft glowing blob in the top-right corner of the hero */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(106, 76, 156, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 5s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(1.3); opacity: 0.2; }
+}
+
+/* --- Avatar circle --- */
+.avatar {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--end-purple), var(--end-cyan));
+  border-radius: 50%;                /* makes it a circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: var(--font-pixel);
+  color: white;
+  flex-shrink: 0;                    /* won't shrink on small screens */
+  position: relative;
+  z-index: 2;
+  animation: avatarGlow 3s infinite alternate;
+}
+
+@keyframes avatarGlow {
+  0%   { box-shadow: 0 0 0 3px rgba(106, 76, 156, 0.5), 0 0 20px rgba(106, 76, 156, 0.3); }
+  100% { box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.6),  0 0 40px rgba(106, 76, 156, 0.6); }
+}
+
+/* --- Name and subtitle --- */
+.hero-info h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  /* Gradient text technique: */
+  background: linear-gradient(to right, var(--end-glow), var(--end-cyan));
+  -webkit-background-clip: text;     /* clip background to text shape */
+  -webkit-text-fill-color: transparent; /* make text itself transparent */
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.hero-info .subhead {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;                   /* wrap to new line if too long */
+  gap: 0.6rem 1.5rem;
+}
+
+.subhead i {
+  color: var(--end-purple);
+  margin-right: 6px;
+}
+
+
+/* ============================================================
+   TODO #10: FILTER BAR
+   ============================================================
+   The language filter buttons above the projects.
+   
+   KEY CONCEPT — :hover and .active states
+   - :hover    → styles applied when mouse is over
+   - .active   → a class added by JavaScript when clicked
+   - .hidden   → a class added by JavaScript to hide projects
+
+   TRY THIS: Change the button `border-radius` from 30px to 0px
+   for a square, retro look.
+   ============================================================ */
+.filter-section {
+  margin-bottom: 2rem;
+}
+
+.filter-title {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--end-glow);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-shadow: 0 0 10px var(--end-purple);
+}
+
+.filter-title i {
+  color: var(--end-cyan);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;                   /* wrap on small screens */
+  gap: 0.8rem;
+}
+
+.filter-btn {
+  background: rgba(18, 20, 32, 0.8);
+  border: 1px solid rgba(106, 76, 156, 0.3);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;               /* pill-shaped buttons */
+  cursor: pointer;
+  transition: 0.3s;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.filter-btn i {
+  font-size: 0.75rem;
+}
+
+.filter-btn:hover {
+  border-color: var(--end-cyan);
+  color: var(--end-glow);
+  box-shadow: 0 0 15px rgba(74, 158, 158, 0.2);
+  transform: translateY(-2px);       /* lifts slightly on hover */
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, rgba(106, 76, 156, 0.4), rgba(74, 158, 158, 0.3));
+  border-color: var(--end-cyan);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(106, 76, 156, 0.4);
+}
+
+
+/* ============================================================
+   TODO #11: PROJECT GRID
+   ============================================================
+   The auto-fill grid that lays out project cards.
+   
+   KEY CONCEPT — grid-template-columns: repeat(auto-fill, ...)
+   This creates as many columns as fit, each at least 280px wide.
+   The browser handles the math for you!
+
+   TRY THIS: Change 280px to 400px. The cards get wider and fewer
+   fit per row. Try 200px for lots of tiny cards.
+   ============================================================ */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.project-card {
+  background: rgba(15, 17, 28, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(106, 76, 156, 0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  /* Bounce-like easing makes the hover feel snappy */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;            /* stack children vertically */
+}
+
+/* Shiny "sweep" effect that slides across the card on hover */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(106, 76, 156, 0.08), transparent);
+  transition: 0.6s;
+}
+
+.project-card:hover::before {
+  left: 100%;
+}
+
+.project-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(74, 158, 158, 0.5);
+  box-shadow:
+    0 12px 40px rgba(106, 76, 156, 0.25),
+    0 0 30px rgba(74, 158, 158, 0.1);
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.project-header i {
+  color: var(--end-cyan);
+  font-size: 1.3rem;
+  text-shadow: 0 0 10px var(--end-cyan);
+}
+
+.project-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  flex: 1;                           /* pushes links to the bottom */
+}
+
+.project-langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Small pill tag for a language/tech name */
+.lang-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: rgba(106, 76, 156, 0.15);
+  border: 1px solid rgba(106, 76, 156, 0.3);
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  color: var(--end-glow);
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.project-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: 0.3s;
+}
+
+.project-links a:hover {
+  color: var(--end-cyan);
+  text-shadow: 0 0 8px var(--end-cyan);
+}
+
+
+/* ============================================================
+   TODO #12: SECTION TITLES
+   ============================================================
+   The heading bars like "// projects & github".
+   A dashed border-bottom separates them from content.
+
+   TRY THIS: Change `border-bottom: 1px dashed` to `1px solid`.
+   The line becomes a clean solid rule instead of dashed.
+   ============================================================ */
+.section-title {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--end-glow);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-shadow: 0 0 10px var(--end-purple);
+  border-bottom: 1px dashed rgba(106, 76, 156, 0.3);
+  padding-bottom: 0.7rem;
+}
+
+.section-title i {
+  color: var(--end-cyan);
+}
+
+
+/* ============================================================
+   TODO #13: DOCUMENTS / WRITINGS LIST
+   ============================================================
+   Each .doc-item is a row with icon + info + link button.
+   They're stacked vertically with `flex-direction: column` on the parent.
+
+   KEY CONCEPT — justify-content: space-between
+   Pushes the first child to the left and the last child to the right.
+   Here it separates the info block from the "read" button.
+   ============================================================ */
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;    /* info left, link right */
+  padding: 1rem 1.2rem;
+  background: rgba(15, 17, 28, 0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(106, 76, 156, 0.15);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.doc-item:hover {
+  border-color: rgba(74, 158, 158, 0.4);
+  background: rgba(20, 24, 38, 0.9);
+  box-shadow: 0 0 20px rgba(106, 76, 156, 0.15);
+}
+
+.doc-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.doc-info i {
+  color: var(--end-purple);
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px var(--end-purple);
+}
+
+.doc-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.doc-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.doc-link {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  border: 1px solid rgba(106, 76, 156, 0.3);
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.doc-link:hover {
+  color: var(--end-cyan);
+  border-color: var(--end-cyan);
+  box-shadow: 0 0 15px rgba(74, 158, 158, 0.2);
+}
+
+
+/* ============================================================
+   TODO #14: RESUME SECTION
+   ============================================================
+   Two cards side by side on desktop, stacked on mobile.
+   Uses CSS Grid for the layout.
+
+   KEY CONCEPT — 1fr 1fr
+   The `fr` unit means "fraction of available space".
+   `1fr 1fr` = two equal columns.
+
+   TRY THIS: Change to `2fr 1fr` for a wider left column.
+   Or `1fr 2fr 1fr` to add a third column (and add HTML for it).
+   ============================================================ */
+.resume-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.resume-card {
+  background: rgba(12, 14, 24, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(106, 76, 156, 0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.resume-card h3 {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--end-cyan);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.resume-card h3 i {
+  color: var(--end-purple);
+}
+
+.job-item {
+  margin-bottom: 1.2rem;
+}
+
+.job-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.job-company {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--end-purple);
+}
+
+.job-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.job-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+
+/* ============================================================
+   TODO #15: STATUS BAR / FOOTER
+   ============================================================
+   The bottom bar showing project counts and "0 problems".
+
+   LEARNING: This uses the same flex tricks as .doc-item.
+   `justify-content: space-between` pushes the two <div>s apart.
+   ============================================================ */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: rgba(10, 12, 20, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(106, 76, 156, 0.2);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2rem;
+}
+
+.status-bar i {
+  color: var(--end-cyan);
+  margin-right: 5px;
+}
+
+
+/* ============================================================
+   TODO #16: RESPONSIVE DESIGN (Media Queries)
+   ============================================================
+   Media queries let you apply styles only when certain conditions
+   are met (like screen width). This is how we make the layout
+   work on phones and tablets.
+
+   KEY CONCEPT — max-width
+   `@media (max-width: 900px)` means "apply these styles when the
+   viewport is 900px wide OR NARROWER".
+
+   TRY THIS: Resize your browser window slowly. Watch when the
+   styles change (that's the breakpoint).
+
+   BREAKPOINTS USED HERE:
+   - 900px → tablet: switch resume to 1 column, show hamburger menu
+   - 600px → phone: stack hero, shrink avatar, reduce padding
+   ============================================================ */
+
+/* ---- Tablet (900px and below) ---- */
+@media (max-width: 900px) {
+  /* Resume becomes single column */
+  .resume-section {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hide nav links by default, show as dropdown when .open is added */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 12, 20, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(106, 76, 156, 0.3);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 1.5rem;
+    gap: 1rem;
+    z-index: 100;
+  }
+
+  /* When JS adds .open, the menu shows */
+  .nav-links.open {
+    display: flex;
+  }
+
+  /* Show the hamburger button */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Menu needs position: relative so the absolute dropdown positions correctly */
+  .menu {
+    position: relative;
+  }
+}
+
+/* ---- Phone (600px and below) ---- */
+@media (max-width: 600px) {
+  /* Stack hero vertically and center text */
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.8rem;
+  }
+
+  .hero-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .subhead {
+    justify-content: center;
+  }
+
+  .avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 2.2rem;
+  }
+
+  .portfolio {
+    padding: 0 0.8rem;
+  }
+
+  /* Let doc items wrap if they're too wide */
+  .doc-item {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  /* Stack status bar vertically */
+  .status-bar {
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+/* ============================================================
+   TODO #17: UTILITY CLASSES
+   ============================================================
+   Small helper classes you can add to any element.
+   
+   `.hidden` is used by JavaScript to hide filtered-out project cards.
+   `!important` overrides other display rules — use sparingly!
+   ============================================================ */
+.hidden {
+  display: none !important;
+}
+
+/* Extra helpers you can use in the HTML */
+.text-accent { color: var(--end-cyan); }
+.text-mono   { font-family: var(--font-mono); }
+.mt-1        { margin-top: 1rem; }
+.mb-1        { margin-bottom: 0.8rem; }
+
+
+/* ============================================================
+   TODO #18: EXPERIMENTS & FURTHER LEARNING
+   ============================================================
+   Here are some ideas to practice with:
+   
+   1. LIGHT MODE: Add a `.light-mode` class to <body> and override
+      the :root variables inside it. Then add a button to toggle it.
+      
+   2. NEW COLOR SCHEME: Change all the --end-* variables to a
+      completely different palette (fire, ocean, forest, etc.)
+      
+   3. CARD SHAPES: Try `border-radius: 0` for sharp edges or
+      `border-radius: 50%` for circular cards (only works with
+      equal width/height).
+      
+   4. FONT SWAP: Change --font-pixel to a different Google Font
+      like 'Orbitron' or 'Audiowide' for a sci-fi feel.
+      
+   5. ANIMATION SPEED: Look for all the `animation:` lines and
+      change the seconds. Make particles faster/slower.
+      
+   6. HOVER EFFECTS: Add `filter: brightness(1.2)` to a card
+      :hover rule to make it glow brighter.
+
+   Remember: the best way to learn CSS is to make small changes
+   and see what happens. Break things, then fix them!
+   ============================================================ */

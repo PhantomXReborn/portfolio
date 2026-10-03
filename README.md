@@ -50,23 +50,18 @@ Welcome to my portfolio! A digital storage system where projects are set free, a
 
 ---
 
-## 🛸 **Tech Constellation**
+## 🛸 **Tech**
 
 <div align="center">
   
-  ### Frontend Galaxy
+  ### Frontend
   ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
   ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
   ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
   
-  ### Visual Nebula
-  ![Canvas API](https://img.shields.io/badge/Canvas_API-4B8BBE?style=flat-square&logo=html5&logoColor=white)
+  ### Visuals
   ![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=flat-square&logo=fontawesome&logoColor=white)
-  ![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?style=flat-square&logo=google&logoColor=white)
-  
-  ### Integration Universe
-  ![GitHub API](https://img.shields.io/badge/GitHub_API-181717?style=flat-square&logo=github&logoColor=white)
-  
+  ![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?style=flat-square&logo=google&logoColor=white)  
 </div>
 
 ---
@@ -75,89 +70,60 @@ Welcome to my portfolio! A digital storage system where projects are set free, a
 
 ```mermaid
 graph TD
-    A[BetaBiteStudios/] --> B[index.html]
-    A --> C[assets/]
-    C --> D[esp32.png]
-    C --> E[dashboard.png]
-    C --> F[city.png]
-    C --> G[hallway.png]
-    C --> H[theater.png]
-    A --> I[README.md]
-    A --> J[sitemap.xml]
+    A[Portfolio/] --> B[portfolio.html]
+    A --> C[style.css]
+    A --> D[README.md]
+    A --> E[License]
 ```
-🔮 Arcane Code Snippets
-✨ Theme Transmutation
+
+✨ Particle Theme
 ```javascript
-document.addEventListener('keydown', (e) => {
-  if (e.key === 't' && !e.ctrlKey && !e.metaKey) {
-    toggleBtn.click(); // The 't' key whispers to the cosmos
-  }
+  const particles = document.querySelectorAll('.particle');
+  particles.forEach((p, i) => {
+    p.style.left = (i * 10 + Math.random() * 5) + '%';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.animationDuration = (18 + Math.random() * 10) + 's';
+  });
 });
 ```
-📊 Number Alchemy
+🎯 Smooth Scrolling
 ```javascript
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounter(entry.target); // Numbers ascend from the void
-    }
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', function() {
+    filterButtons.forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+
+    const filterValue = this.getAttribute('data-filter');
+      filterProjects(filterValue);
   });
+});
 }, { threshold: 0.5 });
 ```
-🌌 Stellar Particle System
-✦ 420+ stars wandering the digital expanse
 
-✦ 150+ floating code runes with sentient motion
+ Filter Button Effect
+```javascript
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return; // skip empty links
 
-✦ Mouse trails leaving behind glyphic whispers
-
-🚀 Deploy to the Stars
-Option 1: ✨ Vercel (Recommended)
-```bash
-# Summon the Vercel CLI
-npm i -g vercel
-
-# Launch to orbit
-vercel --prod
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+}, { threshold: 0.5 });
 ```
-Option 2: 🌐 Netlify
-Drag your cosmic index.html into the Netlify portal
 
-Option 3: 🪐 GitHub Pages
-Push to <username>.github.io
-
-Activate pages in the repository's mystical settings
-
-🎨 Customize Your Cosmos
-Add/Remove Stellar Slides
-```html
-<div class="slider-card">
-  <img src="your-image.png" alt="Description">
-  <div class="slider-content-overlay">
-    <h3>✨ Project Title</h3>
-    <p>Your cosmic creation</p>
-    <div class="tech-tags">
-      <span>🌟 Tag1</span>
-      <span>⚡ Tag2</span>
-    </div>
-  </div>
-</div>
-Change the Celestial Watcher
-javascript
-const username = 'YourGitHubUsername'; // Summon your own repositories
-Recode the Color Universe
-css
-:root {
-  --accent-blue: #1a3a5c;     /* Deep space */
-  --accent-blue-light: #2b5a8a; /* Stellar glow */
-  /* ... Let your imagination drift among the stars */
-}
-```
-📜 License of the Ancients
+📜 License
+<div>
 This project is blessed under the MIT License — a sacred text that allows you to forge, enhance, and share your own cosmic creations. See the LICENSE file for the full incantation.
-
-🤝 Join the Cosmic Order
-Contributions from fellow cosmic travelers are welcomed with open arms!
+</div>
 
 🌌 Fork the repository
 
@@ -169,17 +135,10 @@ Contributions from fellow cosmic travelers are welcomed with open arms!
 
 🌟 Open a Pull Request to the universe
 
-📡 Interstellar Communication
-<div align="center">
-BetaBite Studios
-
-[![Live Demo](https://img.shields.io/badge/%F0%9F%8C%8C_PhantomXReborn-181717?style=flat-square&logo=github&logoColor=white)](https://betabite-studios.vercel.app)
-[![Live Demo](https://img.shields.io/badge/%F0%9F%93%A7_betabite.studios@email.com-D14836?style=flat-square&logo=gmail&logoColor=white)](https://betabite-studios.vercel.app)
-
-</div>
+📡 Creator
 <div align="center"> <br>
-✦ Crafted with <code></></code> and cosmic energy by BetaBite Studios ✦
+✦ Made By Reece Hannah ✦
 
-<sub>© 2024 BetaBite Studios • All rights reserved across all dimensions</sub>
+<sub>2026 Reece Hannah • MIT License Used</sub>
 
 </div>
