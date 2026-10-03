@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reece Hannah's Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       TODO #1: GALAXY BACKGROUND LAYERS
+       ============================================================
+       These <div> elements create the animated galaxy background.
+       They are purely decorative and have no text content.
+
+       - .galaxy-bg  → nebula gradients
+       - .stars      → layer 1 of twinkling stars
+       - .stars2     → layer 2 of twinkling stars
+       - .stars3     → layer 3 of twinkling stars
+
+       LEARNING GOAL: Learn how empty <div> elements can be used
+       as decorative layers with CSS backgrounds and animations.
+  -->
+  <div class="galaxy-bg"></div>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <!-- ============================================================
+       TODO #2: FLOATING PARTICLES (Minecraft End theme)
+       ============================================================
+       These 10 <div class="particle"> elements float upward like
+       the purple particles in the Minecraft End dimension.
+
+       LEARNING GOAL: See how repeating similar elements can create
+       a particle effect. The CSS animates each one differently.
+  -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- ============================================================
+       MAIN PORTFOLIO CONTAINER
+       ============================================================
+       Everything visible sits inside this wrapper.
+  -->
+  <div class="portfolio">
+
+    <!-- ============================================================
+         TODO #3: NAVIGATION MENU (End Portal style)
+         ============================================================
+         The <nav> element holds the main navigation.
+         - .logo       → your name / brand
+         - .nav-links  → list of anchor links
+         - .menu-toggle → hamburger button for mobile (hidden on desktop)
+
+         LEARNING GOAL: Learn semantic HTML with <nav>, <ul>, <li>, <a>.
+         Anchor links (#id) let you jump to sections on the same page.
+    -->
+    <nav class="menu">
+      <div class="logo">
+        <i class="fas fa-cube"></i>
+        <span>REECE.DEV</span>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <!-- TODO #5a: These href values match section id attributes below -->
+        <li><a href="#projects">// projects</a></li>
+        <li><a href="#writings">// writings</a></li>
+        <li><a href="#resume">// resume</a></li>
+        <li><a href="#contact">// contact</a></li>
+      </ul>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+
+    <!-- ============================================================
+         TODO #6: HERO SECTION (Profile)
+         ============================================================
+         - .avatar      → circle with your initials
+         - .hero-info   → name + subtitle info
+
+         LEARNING GOAL: Learn how to structure a header/hero section
+         with flexbox-friendly containers.
+    -->
+    <header class="hero">
+      <!-- TODO #6a: Change "AR" to your own initials -->
+      <div class="avatar">RH</div>
+
+      <div class="hero-info">
+        <!-- TODO #6b: Change the name and details below -->
+        <h1>Reece Hannah</h1>
+        <div class="subhead">
+          <span><i class="fas fa-terminal"></i> Advanced Technologies Student</span>
+          <span><i class="fas fa-map-pin"></i> Kanata, ON | Remote</span>
+          <span><i class="fas fa-envelope"></i> PhantomXReborn1@gmail.com | ReeceHannah.work@gmail.com</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         TODO #7: FILTER BAR (Coding Languages)
+         ============================================================
+         Each button has a data-filter attribute.
+         JavaScript reads this value to show/hide project cards.
+
+         LEARNING GOAL: Learn about data-* attributes — a way to
+         store custom data on HTML elements for JavaScript to use.
+    -->
+    <section class="filter-section">
+      <div class="filter-title">
+        <i class="fas fa-filter"></i> filter by language
+      </div>
+
+      <div class="filter-bar" id="filterBar">
+        <!-- TODO #7a: Add or remove filter buttons here.
+             Each button needs:
+             - class="filter-btn"
+             - data-filter="somevalue"  (lowercase, no spaces)
+             The "all" button should also have class="active" initially. -->
+        <button class="filter-btn active" data-filter="all">
+          <i class="fas fa-globe"></i> all
+        </button>
+        <button class="filter-btn" data-filter="css">
+          <i class="fab fa-css3-alt"></i> CSS
+        </button>
+        <button class="filter-btn" data-filter="javascript">
+          <i class="fab fa-js"></i> JavaScript
+        </button>
+        <button class="filter-btn" data-filter="html5">
+          <i class="fab fa-html5"></i> HTML5
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TODO #8: PROJECT GRID
+         ============================================================
+         Each .project-card needs a data-langs attribute.
+         The value is a comma-separated list of languages/tags
+         that match the data-filter values above.
+
+         Example:
+           data-langs="javascript,react,node"
+         means this card shows when "javascript", "react", OR "node"
+         is selected.
+
+         LEARNING GOAL: See how HTML attributes connect to CSS
+         classes and JavaScript behavior.
+    -->
+    <section id="projects">
+      <div class="section-title">
+        <i class="fas fa-code-branch"></i> projects & github
+      </div>
+
+      <div class="project-grid" id="projectGrid">
+
+        <!-- TODO #8a: PROJECT CARD 1 — Each card needs:
+             - data-langs
+             - icon (any Font Awesome class)
+             - .project-name text
+             - .project-desc text
+             - .lang-tag spans
+             - link href values
+        -->
+        <div class="project-card" data-langs="html,css">
+          <div class="project-header">
+            <i class="fab fa-github"></i>
+            <span class="project-name">Resume</span>
+          </div>
+          <p class="project-desc">
+            Resume built with HTML, CSS. Features a flexible project grid and smooth scrolling.
+          </p>
+          <div class="project-langs">
+            <span class="lang-tag">HTML</span>
+            <span class="lang-tag">CSS</span>
+          </div>
+          <div class="project-links">
+            <a href="#"><i class="fab fa-github"></i> Repository</a>
+            <a href="#"><i class="fas fa-external-link-alt"></i> Demo</a>
+          </div>
+        </div>
+
+        <!-- PROJECT CARD 2 -->
+        <div class="project-card" data-langs="HTML5,CSS,JavaScript">
+          <div class="project-header">
+            <i class="fas fa-laptop-code"></i>
+            <span class="project-name">portfolio</span>
+          </div>
+          <p class="project-desc">
+            This very portfolio! Built with vanilla HTML/CSS, responsive grid,
+            and a Galaxy theme. Open source.
+          </p>
+          <div class="project-langs">
+            <span class="lang-tag">HTML5</span>
+            <span class="lang-tag">CSS</span>
+            <span class="lang-tag">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <a href="#"><i class="fab fa-github"></i> Repository</a>
+            <a href="#"><i class="fas fa-external-link-alt"></i> Demo</a>
+          </div>
+        </div>
+
+        <!-- PROJECT CARD 3 -->
+        <div class="project-card" data-langs="html,css,javascript">
+          <div class="project-header">
+            <i class="fas fa-database"></i>
+            <span class="project-name">Yatzy</span>
+          </div>
+          <p class="project-desc">
+            Dice game built with HTML5 canvas, CSS animations, and vanilla JavaScript.
+          </p>
+          <div class="project-langs">
+            <span class="lang-tag">HTML5</span>
+            <span class="lang-tag">CSS</span>
+            <span class="lang-tag">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <a href="#"><i class="fab fa-github"></i> Repository</a>
+            <a href="#"><i class="fas fa-book"></i> Docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TODO #9: RESUME SECTION
+         ============================================================
+         Two columns: experience & education/skills.
+         On mobile, they stack vertically (handled by CSS grid).
+
+         LEARNING GOAL: Learn how to structure a two-column layout
+         that collapses gracefully on smaller screens.
+    -->
+    <section id="resume" class="resume-section">
+
+      <!-- LEFT COLUMN: Experience -->
+      <div class="resume-card">
+        <h3><i class="fas fa-briefcase"></i> experience</h3>
+
+        <!-- TODO #9a: Add or edit job entries here -->
+        <div class="job-item">
+          <div class="job-title">Senior Software Engineer</div>
+          <div class="job-company">@ TechFlow Labs</div>
+          <div class="job-date">2022 — present</div>
+          <div class="job-desc">Lead frontend architecture for a data dashboard used by 50k+ users.</div>
+        </div>
+
+        <div class="job-item">
+          <div class="job-title">Full-stack Developer</div>
+          <div class="job-company">@ Bitwise Solutions</div>
+          <div class="job-date">2019 — 2022</div>
+          <div class="job-desc">Developed REST APIs and React apps for fintech clients.</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Education & Skills -->
+      <div class="resume-card">
+        <h3><i class="fas fa-graduation-cap"></i> education & skills</h3>
+
+        <div class="job-item">
+          <div class="job-title">B.S. Computer Science</div>
+          <div class="job-company">University of California</div>
+          <div class="job-date">2015 — 2019</div>
+        </div>
+
+        <!-- TODO #9b: Add or remove skill tags below -->
+        <div class="skill-tags" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="lang-tag">JavaScript</span>
+          <span class="lang-tag">HTML5</span>
+          <span class="lang-tag">CSS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TODO #10: WRITINGS & DOCUMENTS
+         ============================================================
+         Each .doc-item is a row with:
+         - An icon (.doc-info i)
+         - Title & meta info
+         - A link button (.doc-link)
+
+         LEARNING GOAL: Learn how to structure list-like content
+         with flexbox for alignment.
+    -->
+    <section id="writings">
+      <div class="section-title">
+        <i class="fas fa-pen-fancy"></i> writings & documents
+      </div>
+
+      <div class="doc-list">
+
+        <!-- TODO #10a: Duplicate this doc-item block to add more writings -->
+        <div class="doc-item">
+          <div class="doc-info">
+            <i class="fas fa-file-alt"></i>
+            <div>
+              <div class="doc-title">Understanding Event Loops</div>
+              <div class="doc-meta">
+                <span>2024-11-12</span>
+                <span>· 8 min read</span>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="doc-link">read</a>
+        </div>
+
+        <div class="doc-item">
+          <div class="doc-info">
+            <i class="fas fa-file-pdf"></i>
+            <div>
+              <div class="doc-title">REST vs GraphQL — when to use what</div>
+              <div class="doc-meta">
+                <span>2024-09-05</span>
+                <span>· 12 pages</span>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="doc-link">download</a>
+        </div>
+
+        <div class="doc-item">
+          <div class="doc-info">
+            <i class="fas fa-file-code"></i>
+            <div>
+              <div class="doc-title">My developer setup 2025</div>
+              <div class="doc-meta">
+                <span>2025-01-20</span>
+                <span>· blog post</span>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="doc-link">open</a>
+        </div>
+
+        <div class="doc-item">
+          <div class="doc-info">
+            <i class="fas fa-file-contract"></i>
+            <div>
+              <div class="doc-title">Clean code notes (personal wiki)</div>
+              <div class="doc-meta">
+                <span>updated 2025-02</span>
+                <span>· ongoing</span>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="doc-link">view</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TODO #11: FOOTER / STATUS BAR
+         ============================================================
+         A simple status bar at the bottom, like a code editor.
+
+         LEARNING GOAL: Learn about the <footer> semantic element
+         and how to split content with flexbox.
+    -->
+    <footer class="status-bar" id="contact">
+      <div><i class="fas fa-check-circle"></i> main* · 0 problems · ready to build</div>
+      <div><i class="fas fa-code-branch"></i> 24 repos · <i class="fas fa-file"></i> 8 docs · <i class="fas fa-envelope"></i> alex.r@dev.portfolio</div>
+    </footer>
+
+  </div><!-- end .portfolio -->
+
+  <!-- ============================================================
+       TODO #12: JAVASCRIPT — FILTER + MENU
+       ============================================================
+       This <script> block handles:
+       1. Mobile menu toggle (hamburger button)
+       2. Project filtering by language
+       3. Smooth scrolling for anchor links
+
+       LEARNING GOAL: See how JavaScript interacts with HTML via:
+       - document.getElementById()
+       - document.querySelectorAll()
+       - addEventListener()
+       - classList.add/remove/toggle()
+
+       You can move this to a separate "script.js" file later
+       and link it with <script src="script.js"></script>.
+  -->
+  <script>
+    (function() {
+      // ============================================================
+      // PART A: MOBILE MENU TOGGLE
+      // ============================================================
+      // When the hamburger button is clicked, show/hide the nav links.
+
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      // TODO #12a: Try changing the Font Awesome icon classes below
+      //          (fa-bars → fa-ellipsis-v, etc.)
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('open');
+
+        const icon = menuToggle.querySelector('i');
+        if (navLinks.classList.contains('open')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // Close the menu when a nav link is clicked
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          const icon = menuToggle.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        });
+      });
+
+      // Close the menu when clicking anywhere outside
+      document.addEventListener('click', function(e) {
+        if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+          navLinks.classList.remove('open');
+          const icon = menuToggle.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // ============================================================
+      // PART B: PROJECT FILTER SYSTEM
+      // ============================================================
+      // Each filter button has a data-filter attribute.
+      // Each project card has a data-langs attribute (comma-separated).
+      // Clicking a button shows only matching cards.
+
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      /**
+       * Show or hide project cards based on the selected filter.
+       * @param {string} filterValue - The language to filter by ("all" shows everything)
+       */
+      function filterProjects(filterValue) {
+        projectCards.forEach(card => {
+          const langs = card.getAttribute('data-langs') || '';
+          const langArray = langs.split(',').map(s => s.trim().toLowerCase());
+
+          if (filterValue === 'all') {
+            card.classList.remove('hidden');
+          } else {
+            if (langArray.includes(filterValue.toLowerCase())) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          }
+        });
+      }
+
+      // TODO #12b: Attach a click event to every filter button.
+      //           When clicked, remove .active from all buttons,
+      //           add .active to the clicked one, then filter.
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          const filterValue = this.getAttribute('data-filter');
+          filterProjects(filterValue);
+        });
+      });
+
+      // Initialize: show all projects on page load
+      filterProjects('all');
+
+      // ============================================================
+      // PART C: SMOOTH SCROLLING FOR ANCHOR LINKS
+      // ============================================================
+      // When a link with href="#something" is clicked, smoothly scroll
+      // to that section instead of jumping instantly.
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return; // skip empty links
+
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // ============================================================
+      // PART D: RANDOMIZE PARTICLE POSITIONS (decorative)
+      // ============================================================
+      // Adds variation to the floating purple particles so they
+      // don't all move in a straight line.
+
+      const particles = document.querySelectorAll('.particle');
+      particles.forEach((p, i) => {
+        p.style.left = (i * 10 + Math.random() * 5) + '%';
+        p.style.animationDelay = (Math.random() * 8) + 's';
+        p.style.animationDuration = (18 + Math.random() * 10) + 's';
+      });
+
+    })();
+  </script>
+
+</body>
+<footer>
+  <div class="filter-title">
+    <i class="fas fa-filter"></i>2026 Reece Hannah. MIT Licence.
+    <i class="fas fa-filter"></i>Icons by Font Awesome</a>
+    <i class="fas fa-filter"></i>Fonts by Google Fonts</a>
+    <i class="fas fa-filter"></i>Research using W3Schools and Online Libraries/Redit
+  </div>
+</footer>
+</html>
