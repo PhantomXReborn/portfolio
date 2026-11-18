@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reece Hannah — Advanced Technologies student portfolio.">
+  <title>Reece Hannah's Portfolio</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <div class="galaxy-bg" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="stars2" aria-hidden="true"></div>
+  <div class="stars3" aria-hidden="true"></div>
+
+  <div class="portfolio">
+    <nav class="menu" aria-label="Primary navigation">
+      <div class="logo">
+        <i class="fas fa-cube" aria-hidden="true"></i>
+        <span>REECE.DEV</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">// home</a></li>
+        <li><a href="projects.html">// projects & yatzy</a></li>
+        <li><a href="#learning">// learning</a></li>
+        <li><a href="#resume-demo">// resume</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+    </nav>
+
+    <header class="hero">
+      <div class="avatar" aria-hidden="true">RH</div>
+      <div class="hero-info">
+        <h1>Reece Hannah</h1>
+        <div class="subhead">
+          <span><i class="fas fa-terminal" aria-hidden="true"></i> Advanced Technologies Student</span>
+          <span><i class="fas fa-map-pin" aria-hidden="true"></i> Kanata, ON | Remote</span>
+          <span><i class="fas fa-envelope" aria-hidden="true"></i> ReeceHannah.work@gmail.com</span>
+        </div>
+        <div class="hero-actions">
+          <a href="projects.html" class="btn btn-primary"><i class="fas fa-code"></i> View Yatzy Docs & Demos</a>
+          <a href="#resume-demo" class="btn btn-outline"><i class="fas fa-file-alt"></i> Jump to Resume</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="resume-demo">
+      <div class="section-title">
+        <i class="fas fa-file-alt" aria-hidden="true"></i> resume demo
+      </div>
+      <p class="section-intro">
+        Below is a live running demo of my resume, rendered directly inside the portfolio page. 
+        You can also <a href="resume/resume.html" target="_blank">open it in a new tab</a>.
+      </p>
+      
+      <div class="demo-window">
+        <div class="demo-window-header">
+          <div class="demo-dots">
+            <div class="demo-dot red"></div>
+            <div class="demo-dot yellow"></div>
+            <div class="demo-dot green"></div>
+          </div>
+          <div class="demo-window-title">resume.html — Live Demo</div>
+        </div>
+        <div class="demo-content" style="height: 850px;">
+          <iframe src="resume/resume.html" title="Reece Hannah Resume Demo" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="learning" style="margin-top: 4rem;">
+      <div class="section-title">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i> technologies & best practices
+      </div>
+      <p class="section-intro">
+        Not every technology below was used in the Yatzy game, but each was explored through the course.
+      </p>
+      <div class="doc-grid">
+        <article class="resume-card">
+          <h3><i class="fas fa-code" aria-hidden="true"></i> core web</h3>
+          <div class="project-langs"><span class="lang-tag">Semantic HTML5</span><span class="lang-tag">CSS Grid</span><span class="lang-tag">Flexbox</span><span class="lang-tag">ES6+</span><span class="lang-tag">JS Modules</span></div>
+        </article>
+        <article class="resume-card">
+          <h3><i class="fas fa-tools" aria-hidden="true"></i> tools & frameworks</h3>
+          <div class="project-langs"><span class="lang-tag">Node.js</span><span class="lang-tag">NPM</span><span class="lang-tag">Express</span><span class="lang-tag">Git / GitHub</span><span class="lang-tag">VS Code</span></div>
+        </article>
+        <article class="resume-card">
+          <h3><i class="fas fa-network-wired" aria-hidden="true"></i> protocols & apis</h3>
+          <div class="project-langs"><span class="lang-tag">REST</span><span class="lang-tag">HTTP</span><span class="lang-tag">JSON</span><span class="lang-tag">Fetch API</span><span class="lang-tag">CORS</span></div>
+        </article>
+        <article class="resume-card">
+          <h3><i class="fas fa-universal-access" aria-hidden="true"></i> standards & a11y</h3>
+          <div class="project-langs"><span class="lang-tag">WCAG 2.1</span><span class="lang-tag">ARIA roles</span><span class="lang-tag">Focus management</span><span class="lang-tag">Responsive design</span></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="status-bar" id="contact">
+      <div><i class="fas fa-check-circle"></i> main* · 0 problems · ready to build</div>
+      <div><i class="fas fa-envelope"></i> ReeceHannah.work@gmail.com</div>
+    </footer>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      navLinks.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
